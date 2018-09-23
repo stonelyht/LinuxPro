@@ -8,7 +8,9 @@
 class Controller_Index extends Controller_Base{
 
     public function Index(){
-        $this->display = true;
+        $this->_display = true;
         print_r(phpinfo());
+        //open_basedir=/www/wwwroot/LinuxPro/Admin/:/tmp/:/proc/
     }
+
 }
