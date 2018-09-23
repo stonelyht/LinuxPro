@@ -26,10 +26,9 @@
  */
 return array(
     //后台DB
-    'ly_sdk' => array(
+    'admin' => array(
         'mode' => 'normal',
         'conn' => array(
-//            '127.0.0.1:3306:root::ly_sdk'
             '47.106.238.224:3306:root:111qqqpwd:Linux-admin'
         ),
     )

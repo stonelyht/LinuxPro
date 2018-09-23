@@ -22,11 +22,10 @@
  * )
  */
 return array(
-    'playwhale' => array(
+    'admin' => array(
         'mode' => 'normal',
         'conn' => array(
             '47.106.238.224:6379'
-//            '127.0.0.1:6379'
         ),
     ),
 );
