@@ -27,7 +27,7 @@ class Controller_Login extends Controller_Base{
         $username = getHttpVal('username');
         $password = getHttpVal('password');
         $formhash = getHttpVal('formhash');
-        if ($username || $password || $formhash != $this->_formhash){
+        if (!empty($username) || !empty($password)|| !empty($formhash) || $formhash != $this->_formhash){
             $account_m = new Model_Account();
             $account_info = $account_m->getUser($username,md5($password));
             if ($account_info){
@@ -42,7 +42,6 @@ class Controller_Login extends Controller_Base{
                     'login_time' => time(),
                     'login_ip' => getIp()
                 ];
-//                var_dump($account_info);die;
                 $account_m->updateDbById($user_id,$updata);
                 $this->redirect('/');
             }else{
