@@ -20,9 +20,14 @@ class Controller_Base extends Sys_Core_Controller{
     public function __destruct()
     {
         // TODO: Implement __destruct() method.
-        $this->assign('page_title', $this->_page_title);
-        $this->assign('menu', $this->fetch('../menu.' . conf('default', 'View_Suffix')));
-        $this->assign('content', $this->fetch());
-        $this->display('../index.html');
+        $Controller = Sys_Lib_Cache_Array::get('Controller');
+        $Action = Sys_Lib_Cache_Array::get('Action');
+        if (ucwords($Controller) !='Login' && ucwords($Action)!='Action'){
+            $this->assign('page_title', $this->_page_title);
+            $this->assign('menu', $this->fetch('../menu.' . conf('default', 'View_Suffix')));
+            $this->assign('content', $this->fetch());
+            $this->display('../index.html');
+        }
+
     }
 }
