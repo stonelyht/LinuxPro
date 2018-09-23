@@ -1,4 +1,25 @@
-<div class="view-product background-color">
+<?php /* Smarty version Smarty-3.1.14, created on 2018-09-23 18:04:57
+         compiled from "E:\wamp64\www\LinuxPro\Admin\Views\Index\index.html" */ ?>
+<?php /*%%SmartyHeaderCode:60545ba75ea9e55199-60606048%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '28c1fb97625900913c2bdeb92fdd3d2a2cf55a16' => 
+    array (
+      0 => 'E:\\wamp64\\www\\LinuxPro\\Admin\\Views\\Index\\index.html',
+      1 => 1537697095,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '60545ba75ea9e55199-60606048',
+  'function' => 
+  array (
+  ),
+  'version' => 'Smarty-3.1.14',
+  'unifunc' => 'content_5ba75ea9e856d0_09960051',
+  'has_nocache_code' => false,
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_5ba75ea9e856d0_09960051')) {function content_5ba75ea9e856d0_09960051($_smarty_tpl) {?><div class="view-product background-color">
     <div class="padding-big background-color">
         <div class="account-info clearfix">
             <div class="text-box-main min-width-300 fl">
@@ -156,4 +177,4 @@
             </div>
         </div>
     </div>
-</div>
+</div><?php }} ?>
