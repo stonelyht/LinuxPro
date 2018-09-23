@@ -93,6 +93,7 @@ class Controller_Base extends Sys_Core_Controller{
         $Action = Sys_Lib_Cache_Array::get('Action');
         if (ucwords("$Controller") !='Login' && ucwords("$Action") !='Login'){
             $this->assign('page_title', $this->_page_title);
+            $this->assign('username',$this->_user_info['username']);
             $this->assign('menu', $this->fetch('../menu.' . conf('default', 'View_Suffix')));
             $this->assign('content', $this->fetch());
             $this->display('../index.html');

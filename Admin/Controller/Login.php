@@ -49,4 +49,9 @@ class Controller_Login extends Controller_Base{
             }
         }
     }
+
+    public function loginout(){
+        session_destroy();
+        $this->redirect('/Login/Login');
+    }
 }
