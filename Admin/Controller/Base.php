@@ -22,7 +22,7 @@ class Controller_Base extends Sys_Core_Controller{
         // TODO: Implement __destruct() method.
         $Controller = Sys_Lib_Cache_Array::get('Controller');
         $Action = Sys_Lib_Cache_Array::get('Action');
-        if (ucwords($Controller) !='Login' && ucwords($Action)!='Action'){
+        if (ucwords("$Controller") !='Login' && ucwords("$Action") !='Login'){
             $this->assign('page_title', $this->_page_title);
             $this->assign('menu', $this->fetch('../menu.' . conf('default', 'View_Suffix')));
             $this->assign('content', $this->fetch());
