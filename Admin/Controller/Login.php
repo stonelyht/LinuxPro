@@ -44,7 +44,7 @@ class Controller_Login extends Controller_Base{
                 ];
 //                var_dump($account_info);die;
                 $account_m->updateDbById($user_id,$updata);
-                $this->redirect('/Index/Index');
+                $this->redirect('/');
             }else{
                 $this->redirect('/Login/Login');
             }
