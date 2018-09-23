@@ -37,6 +37,7 @@ class Controller_Login extends Controller_Base{
                 $_SESSION['group_id'] = $group_id;
                 $this->_user_id = $user_id;
                 $this->_group_id = $group_id;
+                $_SESSION['expire'] = time() + 7200 * 3;
                 $updata = [
                     'login_time' => time(),
                     'login_ip' => getIp()
