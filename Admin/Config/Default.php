@@ -52,4 +52,9 @@ return array(
      * 资源路径
      */
     'Path_Public' => '/Public',
+
+    /**
+     * 视图路径
+     */
+    'Path_View' => APP_PATH. '/Views',
 );
