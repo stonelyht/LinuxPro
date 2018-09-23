@@ -7,4 +7,8 @@
  */
 class Model_Base extends Sys_Model_Base{
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }

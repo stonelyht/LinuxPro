@@ -17,4 +17,24 @@ class Controller_Login extends Controller_Base{
     public function Login(){
         $this->display();
     }
+
+    /**
+     * 登陆
+     */
+    public function Land(){
+        $this->_display = true;
+        $username = getHttpVal('username');
+        $password = getHttpVal('password');
+        $formhash = getHttpVal('formhash');
+        if ($username || $password || $formhash){
+            $account_m = new Model_Account();
+            $account_info = $account_m->getUser($username,md5($password));
+            if ($account_info){
+                $userid = $account_info['id'];
+                $group_id = $account_info['group_id'];
+            }else{
+                $this->redirect('Login/Login');
+            }
+        }
+    }
 }
