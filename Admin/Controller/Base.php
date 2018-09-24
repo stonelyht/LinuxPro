@@ -63,24 +63,23 @@ class Controller_Base extends Sys_Core_Controller{
         $this->_time = time();
         $this->controller = Sys_Lib_Cache_Array::get('Controller');
         $this->action = Sys_Lib_Cache_Array::get('Action');
-        if ("/".ucwords($this->controller)."/".ucwords($this->action) != "/Login/Land"){
-            if (ucwords($this->controller) != "Login" || ucwords($this->action) != "Login"){
-                $this->_user_id = getHttpVal('user_id', 'SESSION');
-                $expire = getHttpVal('expire', 'SESSION');
-                if (!$this->_user_id || $expire < time()) {
-                    session_destroy();
-                    $this->redirect("/Login/Login");
-                }
-                $this->_group_id = getHttpVal('group_id', 'SESSION');
-                if (!$this->_group_id) {
-                    $this->redirect("/Login/Login");
-                }
-                Sys_Lib_Cache_Array::set('operator_id', $this->_group_id);
-                $account_m = new Model_Account();
-                $this->_user_info = $account_m->selectDbById($this->_user_id);
-                $_SESSION['expire'] = time() + 7200 * 3;
-            }
+        $this->_user_id = getHttpVal('user_id', 'SESSION');
+        $expire = getHttpVal('expire', 'SESSION');
+
+        if (!$this->_user_id || $expire < time()) {
+            session_destroy();
+            $this->redirect("/Login/Login");
         }
+
+        $this->_group_id = getHttpVal('group_id', 'SESSION');
+        if (!$this->_group_id) {
+            $this->redirect("/Login/Login");
+        }
+
+        Sys_Lib_Cache_Array::set('operator_id', $this->_group_id);
+        $account_m = new Model_Account();
+        $this->_user_info = $account_m->selectDbById($this->_user_id);
+        $_SESSION['expire'] = time() + 7200 * 3;
     }
 
     /**
@@ -89,15 +88,10 @@ class Controller_Base extends Sys_Core_Controller{
     public function __destruct()
     {
         // TODO: Implement __destruct() method.
-        $Controller = Sys_Lib_Cache_Array::get('Controller');
-        $Action = Sys_Lib_Cache_Array::get('Action');
-        if (ucwords("$Controller") !='Login' && ucwords("$Action") !='Login'){
             $this->assign('page_title', $this->_page_title);
             $this->assign('username',$this->_user_info['username']);
             $this->assign('menu', $this->fetch('../menu.' . conf('default', 'View_Suffix')));
             $this->assign('content', $this->fetch());
             $this->display('../index.html');
-        }
-
     }
 }

@@ -9,7 +9,7 @@
 /**
  * Class Controller_Login
  */
-class Controller_Login extends Controller_Base{
+class Controller_Login extends Sys_Core_Controller{
 
     protected $_formhash = '5abb5d21';
     /**
