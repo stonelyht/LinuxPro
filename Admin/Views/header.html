@@ -80,21 +80,16 @@
 <script>
     function pwdinput() {
         layer.open({
-            type: 1,
+            type: 3,
             title: false,
             closeBtn: 0,
             shadeClose: true,
-            skin: 'yourclass',
             content: '<form class="register-form" autocomplete="off" >\n' +
             '\t\t\t\t\t<div class="num-box ">\n' +
             '\t\t\t\t\t\t<div class="area fl">\n' +
             '\t\t\t\t\t\t\t新密码\n' +
             '\t\t\t\t\t\t</div>\n' +
             '\t\t\t\t\t\t<input type="text" placeholder="请输入密码" autofocus="true" id="pwd" name="password" datatype="m" >\n' +
-            '\t\t\t\t\t</div>\n' +
-            '\t\t\t\t\t<div class="slider-box">\n' +
-            '\t\t\t\t\t\t<div id="captcha" style="margin-left: 12px;">\n' +
-            '\t\t\t\t\t\t</div>\n' +
             '\t\t\t\t\t</div>\n' +
             '\t\t\t\t\t<input type="button" onclick="newpwd()" class="btn text-center login-btn" value="修改">\n' +
             '\t\t\t\t</form>'
