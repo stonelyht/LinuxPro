@@ -88,10 +88,14 @@ class Controller_Base extends Sys_Core_Controller{
     public function __destruct()
     {
         // TODO: Implement __destruct() method.
+        if (!$this->_display) {
             $this->assign('page_title', $this->_page_title);
-            $this->assign('username',$this->_user_info['username']);
+            $this->assign('username', $this->_user_info['username']);
+            $this->assign('PATHPREFIX', conf('default', 'Path_Prefix'));
+            $this->assign('PATHPUBLIC', conf('default', 'Path_Public'));
             $this->assign('menu', $this->fetch('../menu.' . conf('default', 'View_Suffix')));
             $this->assign('content', $this->fetch());
             $this->display('../index.html');
+        }
     }
 }

@@ -14,8 +14,6 @@ class Controller_Index extends Controller_Base{
     public function Index()
     {
         $this->_page_title = '管理控制台';
-        $aa = '51515115';
-        $this->assign('aa',$aa);
     }
 
 

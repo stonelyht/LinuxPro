@@ -8,11 +8,12 @@
     <link rel="shortcut icon" href="/Public/admin.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/Public/Css/identify.css" />
     <link rel="stylesheet" type="text/css" href="/Public/Css/layout.css" />
-    <link rel="stylesheet" type="text/css" href="/Public/Css/account.css" />
+    <link rel="stylesheet" type="text/css" href="/Public/layer/theme/default/layer.css" />
     <link rel="stylesheet" type="text/css" href="/Public/Css/style.css" />
     <link rel="stylesheet" type="text/css" href="/Public/Css/control_index.css" />
+    <link href="/Public/Css/login.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/Public/Js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="/Public/Js/layer/layer.js"></script>
+    <script type="text/javascript" src="/Public/layer/layer.js"></script>
     <script type="text/javascript" src="/Public/Js/haidao.offcial.general.js"></script>
     <script type="text/javascript" src="/Public/Js/select.js"></script>
     <script type="text/javascript" src="/Public/Js/haidao.validate.js"></script>
@@ -24,7 +25,7 @@
             <a href="#" class="topbar-logo fl">
                 <span><img src="/Public//Images/logo.png" width="20" height="20"/></span>
             </a>
-            <a href="index.html" class="topbar-home-link topbar-btn text-center fl"><span>管理控制台</span></a>
+            <a href="<{$PATHPREFIX}>/" class="topbar-home-link topbar-btn text-center fl"><span>管理控制台</span></a>
         </div>
     </div>
     <div class="topbar-info">
@@ -68,6 +69,7 @@
                         <span class="icon-arrow-down"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0);" onclick="pwdinput()">修改密码</a></li>
                         <li><a href="<{$PATHPREFIX}>/Login/loginout">退出</a></li>
                     </ul>
                 </div>
@@ -75,3 +77,36 @@
         </ul>
     </div>
 </div>
+<script>
+    function pwdinput() {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            shadeClose: true,
+            skin: 'yourclass',
+            content: '<form class="register-form" autocomplete="off" >\n' +
+            '\t\t\t\t\t<div class="num-box ">\n' +
+            '\t\t\t\t\t\t<div class="area fl">\n' +
+            '\t\t\t\t\t\t\t新密码\n' +
+            '\t\t\t\t\t\t</div>\n' +
+            '\t\t\t\t\t\t<input type="text" placeholder="请输入密码" autofocus="true" id="pwd" name="password" datatype="m" >\n' +
+            '\t\t\t\t\t</div>\n' +
+            '\t\t\t\t\t<div class="slider-box">\n' +
+            '\t\t\t\t\t\t<div id="captcha" style="margin-left: 12px;">\n' +
+            '\t\t\t\t\t\t</div>\n' +
+            '\t\t\t\t\t</div>\n' +
+            '\t\t\t\t\t<input type="button" onclick="newpwd()" class="btn text-center login-btn" value="修改">\n' +
+            '\t\t\t\t</form>'
+        });
+    }
+
+    function newpwd() {
+        var pwd = document.getElementById('pwd').value;
+        if (pwd == ''){
+            layer.msg('密码不能为空');
+        }else {
+            window.location.href = "<{$PATHPREFIX}>/Ajax/changePwd?password="+pwd+"";
+        }
+    }
+</script>
