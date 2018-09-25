@@ -1,0 +1,272 @@
+<style>
+    #pageBar {
+        text-align: right;
+        padding: 0 20px 20px 0;
+    }
+    .pageBtn a {
+        display: inline-block;
+        border: 1px solid #aaa;
+        padding: 2px 5px;
+        margin : 0 3px;
+        font-size: 13px;
+        background: #ECECEC;
+        color: black;
+        text-decoration: none;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 3px;
+    }
+    .pageBtn-selected a {
+        display: inline-block;
+        border: 1px solid #aaa;
+        padding: 2px 5px;
+        margin : 0 3px;
+        font-size: 13px;
+        background: #187BBD;
+        color: white;
+        text-decoration: none;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 3px;
+    }
+    .pageBtn a:hover {
+        background: #187BBD;
+        color: white;
+    }
+</style>
+<div class="view-product">
+    <div class="authority">
+        <div class="authority-head">
+            <div class="manage-head">
+                <h6 class="layout padding-left manage-head-con">
+                    <{$page_title}>
+                </h6>
+            </div>
+        </div>
+        <div class="authority-content">
+            <div class="list-content show">
+                <div class="offcial-table tr-border margin-big-top clearfix">
+                    <div class="tr-th clearfix" style="width: auto">
+                        <div class="th w20" style="width: 90px">
+                            ID
+                        </div>
+                        <div class="th w20" style="width: 100px">
+                            Controller
+                        </div>
+                        <div class="th w15" style="width: 90px">
+                            Action
+                        </div>
+                        <div class="th w15" style="width: 110px">
+                            Ajax-Action
+                        </div>
+                        <div class="th w15" style="width: 100px">
+                            名称
+                        </div>
+                        <div class="th w15" style="width: 100px">
+                            备注
+                        </div>
+                        <div class="th w15" style="width: 100px">
+                            排序
+                        </div>
+                        <div class="th w15" style="width: 100px">
+                            父ID
+                        </div>
+                        <div class="th w15" style="width: 100px">
+                            状态
+                        </div>
+                        <div class="th w15" style="width: 100px">
+                            显示
+                        </div>
+                        <div class="th w15" style="width: 146px">
+                            操作
+                        </div>
+                    </div>
+                    <div class="tr clearfix border-bottom-none" id="nodeInfo" style="width: auto">
+                        <!--<div class="td w20">-->
+                            <!--我的系统-->
+                        <!--</div>-->
+                        <!--<div class="td w20">-->
+                            <!--localhost-->
+                        <!--</div>-->
+                        <!--<div class="td w15">-->
+                            <!--&#45;&#45;-->
+                        <!--</div>-->
+                        <!--<div class="td w15">-->
+                            <!--2016-01-10 11:54:07-->
+                        <!--</div>-->
+                        <!--<div class="td w15">-->
+                            <!--<a href="#" class="button-word2">无</a>-->
+                        <!--</div>-->
+                        <!--<div class="td w15">-->
+                            <!--<a href="#" msg="您是否删除此站点，如果删除会影响站点通信导致部分功能无法使用？" callback="del_site(624)" data-id="" class="button-word2 btn_ajax_confirm">删除</a>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="show-page padding-big-right">
+                <div class="page">
+                    <div class="page" id="pageBar">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var curPage;        //当前页数
+    var totalItem;      //总记录数
+    var pageSize;       //每一页记录数
+    var totalPage;      //总页数
+
+    //页面加载时初始化分页
+    $(function() {
+        nodeInfo(1);
+    });
+
+    /**
+     * @param pageNum
+     */
+    function nodeInfo(pageNum) {
+        $.ajax({
+            url:"<{$PATHPREFIX}>/AjaxTable/nodes",
+            type:"post",
+            dataType:"json",
+            data:{pageNum:pageNum},
+            beforeSend: function() {
+                data_html = '<div class="td w15">\n' +
+                    '加载中. . .\n' +
+                    '</div>';
+                document.getElementById('nodeInfo').innerHTML = data_html;
+            },
+            success:function(json){
+                document.getElementById('nodeInfo').innerHTML = '';
+                if (json.code != '401'){
+                    totalItem = json.totalItem;
+                    pageSize = json.pageSize;
+                    curPage = pageNum;
+                    totalPage = json.totalPage;
+                    var data_content = json.data_content;
+                    var data_html = "";
+                    $.each(data_content,function(index,array) {
+                        data_html += '<div>'+
+                            '<div class="th w20" style="width: 90px">\n' +
+                            ''+array.id+'\n' +
+                            '</div>\n' +
+                            '<div class="th w20" style="width: 100px">\n' +
+                            ''+array.controller+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 90px">\n' +
+                            ''+array.action+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 110px">\n' +
+                            ''+array.action_operate+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 100px">\n' +
+                            ''+array.name+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 100px">\n' +
+                            ''+array.remark+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 100px">\n' +
+                            ''+array.sort+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 100px">\n' +
+                            ''+array.pid+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 100px">\n' +
+                            ''+array.status+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 100px">\n' +
+                            ''+array.show+'\n' +
+                            '</div>\n' +
+                            '<div class="th w15" style="width: 146px">\n' +
+                            '<a style="color: red" onclick="delNode(this,'+array.id+')">删除</a> | <a>编辑</a>\n' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    document.getElementById('nodeInfo').innerHTML = data_html;
+                    //加载分页
+                    getPageBar();
+                }else {
+                    data_html = '<div class="td w15">\n' +
+                        '暂时没有数据\n' +
+                        '</div>';
+                    document.getElementById('nodeInfo').innerHTML = data_html;
+                }
+            }
+        });
+    }
+
+    //获取分页条（分页按钮栏的规则和样式根据自己的需要来设置）
+    function getPageBar()
+    {
+        if(curPage > totalPage) {
+            curPage = totalPage;
+        }
+        if(curPage < 1) {
+            curPage = 1;
+        }
+
+        pageBar = "";
+
+        //如果不是第一页
+        if(curPage != 1){
+            pageBar += "<span class='pageBtn'><a href='javascript:turnPage(1)'>首页</a></span>";
+            pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+(curPage-1)+")'><<</a></span>";
+        }
+
+        //显示的页码按钮(5个)
+        var start,end;
+        if(totalPage <= 5) {
+            start = 1;
+            end = totalPage;
+        } else {
+            if(curPage-2 <= 0) {
+                start = 1;
+                end = 5;
+            } else {
+                if(totalPage-curPage < 2) {
+                    start = totalPage - 4;
+                    end = totalPage;
+                } else {
+                    start = curPage - 2;
+                    end = curPage + 2;
+                }
+            }
+        }
+        for(var i=start;i<=end;i++) {
+            if(i == curPage) {
+                pageBar += "<span class='pageBtn-selected'><a href='javascript:turnPage("+i+")'>"+i+"</a></span>";
+            } else {
+                pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+i+")'>"+i+"</a></span>";
+            }
+        }
+        //如果不是最后页
+        if(curPage != totalPage){
+            pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+(parseInt(curPage)+1)+")'>>></a></span>";
+            pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+totalPage+")'>尾页</a></span>";
+        }
+        var Record = "   <span>每页"+pageSize+"条   共"+totalItem+"条</span>";
+        $("#pageBar").html(pageBar+Record);
+    }
+
+    function delNode(e,id) {
+        layer.confirm('您确定要删除节点吗？', {
+            btn: ['确定','取消'], //按钮
+            title:'删除节点'
+        }, function(){
+            $.ajax({
+                url:"<{$PATHPREFIX}>/AjaxTable/delNode",
+                type:"post",
+                dataType:"json",
+                data:{id:id},
+                success:function(data){
+                    if (data['code'] == '201'){
+                        layer.msg('删除成功',{icon: 1});
+                        e.parentNode.parentNode.remove();
+                    }else {
+                        layer.msg('删除失败',{icon: 2});
+                    }
+                }
+            });
+        });
+    }
+</script>
