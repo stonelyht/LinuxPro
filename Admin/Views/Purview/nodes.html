@@ -42,44 +42,44 @@
             </div>
         </div>
         <div class="authority-content">
-            <table class="list-content show">
-                <thead class="offcial-table tr-border margin-big-top clearfix">
-                    <tr class="tr-th clearfix" style="width: auto">
-                        <th class="th w20" style="width: 90px">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
                             ID
                         </th>
-                        <th class="th w20" style="width: 100px">
+                        <th>
                             Controller
                         </th>
-                        <th class="th w15" style="width: 90px">
+                        <th>
                             Action
                         </th>
-                        <th class="th w15" style="width: 110px">
+                        <th>
                             Ajax-Action
                         </th>
-                        <th class="th w15" style="width: 100px">
+                        <th>
                             名称
                         </th>
-                        <th class="th w15" style="width: 100px">
+                        <th>
                             备注
                         </th>
-                        <th class="th w15" style="width: 100px">
+                        <th>
                             排序
                         </th>
-                        <th class="th w15" style="width: 100px">
+                        <th>
                             父ID
                         </th>
-                        <th class="th w15" style="width: 100px">
+                        <th>
                             状态
                         </th>
-                        <th class="th w15" style="width: 100px">
+                        <th>
                             显示
                         </th>
-                        <th class="th w15" style="width: 146px">
+                        <th>
                             操作
                         </th>
                     </tr>
-                    <tbody class="tr clearfix border-bottom-none" id="nodeInfo" style="width: auto">
+                    <tbody id="nodeInfo" >
                         <!--<div class="td w20">-->
                             <!--我的系统-->
                         <!--</div>-->
@@ -147,37 +147,37 @@
                     var data_html = "";
                     $.each(data_content,function(index,array) {
                         data_html += '<tr>'+
-                            '<td class="th w20" style="width: 90px">\n' +
+                            '<td>\n' +
                             ''+array.id+'\n' +
                             '</td>\n' +
-                            '<td class="th w20" style="width: 100px">\n' +
+                            '<td>\n' +
                             ''+array.controller+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 90px">\n' +
+                            '<td>\n' +
                             ''+array.action+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 110px">\n' +
+                            '<td>\n' +
                             ''+array.action_operate+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 100px">\n' +
+                            '<td>\n' +
                             ''+array.name+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 100px">\n' +
+                            '<td>\n' +
                             ''+array.remark+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 100px">\n' +
+                            '<td>\n' +
                             ''+array.sort+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 100px">\n' +
+                            '<td>\n' +
                             ''+array.pid+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 100px">\n' +
+                            '<td>\n' +
                             ''+array.status+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 100px">\n' +
+                            '<td>\n' +
                             ''+array.show+'\n' +
                             '</td>\n' +
-                            '<td class="th w15" style="width: 146px">\n' +
+                            '<td>\n' +
                             '<a style="color: red" onclick="delNode(this,'+array.id+')">删除</a> | <a>编辑</a>\n' +
                             '</td>' +
                             '</tr>';
