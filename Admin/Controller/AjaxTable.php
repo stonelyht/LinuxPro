@@ -8,11 +8,14 @@
 
 class Controller_AjaxTable extends Controller_Base{
 
+    public function init() {
+        parent::init();
+        $this->_display = true;
+    }
     /**
      * 获取节点列表
      */
     public function nodes(){
-        $this->_display = true;
         //页数
         $pageNum = getHttpVal('pageNum');
         $node_m = new Model_PurviewNode();
@@ -43,11 +46,21 @@ class Controller_AjaxTable extends Controller_Base{
      * 删除节点
      */
     public function delNode(){
-        $this->_display = true;
         $id = getHttpVal('id');
         $node_m = new Model_PurviewNode();
         $node_m->deleteDbById($id);
         $arr['code'] = '201';
         echo json_encode($arr);
     }
+
+    /**
+     * 修改节点
+     */
+    public function editNode(){
+        $id = getHttpVal('id');
+        $node_m = new Model_PurviewNode();
+        $node_info = $node_m->selectDbById($id);
+        echo json_encode($node_info);
+    }
+
 }
