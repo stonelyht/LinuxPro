@@ -26,7 +26,7 @@ body{font-family: 'Lantinghei SC','microsoft yahei', Tahoma, Helvetica, SimSun, 
 .topbar-info .topbar-notice .icon-notice { float: left; margin: 17px 5px 17px 0; }
 .topbar-info .topbar-notice .topbar-num { font-size: 12px; color: #00ace9; background: #0087b4; border-radius: 5px; padding: 2px 5px; display: inline-block; margin-top: 15px; line-height: 16px; vertical-align: top; text-align: center; }
 .topbar-info .topbar-notice .topbar-num.have { color: #fff; background: #f90; }
-.topbar-info .topbar-info-item { margin-left: 1px; }
+.topbar-info .topbar-info-item { margin-left: 1px; height: 50px;}
 .view-topbar .topbar-info .topbar-btn { padding: 0 10px; height: 50px; display: block; z-index: 2; background: #2a94de; }
 .topbar-info .topbar-btn:hover,.topbar-info .topbar-btn.topbar-btn-dark { background: #1380cb; }
 .topbar-info .dropdown-menu { width: 100%; z-index: 1; }
