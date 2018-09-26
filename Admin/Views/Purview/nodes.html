@@ -42,44 +42,44 @@
             </div>
         </div>
         <div class="authority-content">
-            <div class="list-content show">
-                <div class="offcial-table tr-border margin-big-top clearfix">
-                    <div class="tr-th clearfix" style="width: auto">
-                        <div class="th w20" style="width: 90px">
+            <table class="list-content show">
+                <thead class="offcial-table tr-border margin-big-top clearfix">
+                    <tr class="tr-th clearfix" style="width: auto">
+                        <th class="th w20" style="width: 90px">
                             ID
-                        </div>
-                        <div class="th w20" style="width: 100px">
+                        </th>
+                        <th class="th w20" style="width: 100px">
                             Controller
-                        </div>
-                        <div class="th w15" style="width: 90px">
+                        </th>
+                        <th class="th w15" style="width: 90px">
                             Action
-                        </div>
-                        <div class="th w15" style="width: 110px">
+                        </th>
+                        <th class="th w15" style="width: 110px">
                             Ajax-Action
-                        </div>
-                        <div class="th w15" style="width: 100px">
+                        </th>
+                        <th class="th w15" style="width: 100px">
                             名称
-                        </div>
-                        <div class="th w15" style="width: 100px">
+                        </th>
+                        <th class="th w15" style="width: 100px">
                             备注
-                        </div>
-                        <div class="th w15" style="width: 100px">
+                        </th>
+                        <th class="th w15" style="width: 100px">
                             排序
-                        </div>
-                        <div class="th w15" style="width: 100px">
+                        </th>
+                        <th class="th w15" style="width: 100px">
                             父ID
-                        </div>
-                        <div class="th w15" style="width: 100px">
+                        </th>
+                        <th class="th w15" style="width: 100px">
                             状态
-                        </div>
-                        <div class="th w15" style="width: 100px">
+                        </th>
+                        <th class="th w15" style="width: 100px">
                             显示
-                        </div>
-                        <div class="th w15" style="width: 146px">
+                        </th>
+                        <th class="th w15" style="width: 146px">
                             操作
-                        </div>
-                    </div>
-                    <div class="tr clearfix border-bottom-none" id="nodeInfo" style="width: auto">
+                        </th>
+                    </tr>
+                    <tbody class="tr clearfix border-bottom-none" id="nodeInfo" style="width: auto">
                         <!--<div class="td w20">-->
                             <!--我的系统-->
                         <!--</div>-->
@@ -98,9 +98,9 @@
                         <!--<div class="td w15">-->
                             <!--<a href="#" msg="您是否删除此站点，如果删除会影响站点通信导致部分功能无法使用？" callback="del_site(624)" data-id="" class="button-word2 btn_ajax_confirm">删除</a>-->
                         <!--</div>-->
-                    </div>
-                </div>
-            </div>
+                    </tbody>
+                </thead>
+            </table>
             <div class="show-page padding-big-right">
                 <div class="page">
                     <div class="page" id="pageBar">
@@ -146,41 +146,41 @@
                     var data_content = json.data_content;
                     var data_html = "";
                     $.each(data_content,function(index,array) {
-                        data_html += '<div>'+
-                            '<div class="th w20" style="width: 90px">\n' +
+                        data_html += '<tr>'+
+                            '<td class="th w20" style="width: 90px">\n' +
                             ''+array.id+'\n' +
-                            '</div>\n' +
-                            '<div class="th w20" style="width: 100px">\n' +
+                            '</td>\n' +
+                            '<td class="th w20" style="width: 100px">\n' +
                             ''+array.controller+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 90px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 90px">\n' +
                             ''+array.action+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 110px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 110px">\n' +
                             ''+array.action_operate+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 100px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 100px">\n' +
                             ''+array.name+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 100px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 100px">\n' +
                             ''+array.remark+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 100px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 100px">\n' +
                             ''+array.sort+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 100px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 100px">\n' +
                             ''+array.pid+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 100px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 100px">\n' +
                             ''+array.status+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 100px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 100px">\n' +
                             ''+array.show+'\n' +
-                            '</div>\n' +
-                            '<div class="th w15" style="width: 146px">\n' +
+                            '</td>\n' +
+                            '<td class="th w15" style="width: 146px">\n' +
                             '<a style="color: red" onclick="delNode(this,'+array.id+')">删除</a> | <a>编辑</a>\n' +
-                            '</div>' +
-                            '</div>';
+                            '</td>' +
+                            '</tr>';
                     });
                     document.getElementById('nodeInfo').innerHTML = data_html;
                     //加载分页
