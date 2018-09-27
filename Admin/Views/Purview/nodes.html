@@ -250,9 +250,9 @@
             dataType:"json",
             data:{pageNum:pageNum},
             beforeSend: function() {
-                data_html = '<div class="td w15">\n' +
+                data_html = '<tr class="td w15">\n' +
                     '加载中. . .\n' +
-                    '</div>';
+                    '</tr>';
                 document.getElementById('nodeInfo').innerHTML = data_html;
             },
             success:function(json){
@@ -305,9 +305,9 @@
                     //加载分页
                     getPageBar();
                 }else {
-                    data_html = '<div class="td w15">\n' +
+                    data_html = '<tr class="td w15">\n' +
                         '暂时没有数据\n' +
-                        '</div>';
+                        '</tr>';
                     document.getElementById('nodeInfo').innerHTML = data_html;
                 }
             }
