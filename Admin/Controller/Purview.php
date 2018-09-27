@@ -12,6 +12,9 @@ class Controller_Purview extends Controller_Base{
         $this->_page_title = '节点列表';
     }
 
+    /**
+     * 更新节点，添加新节点
+     */
     public function updateNode(){
         $this->_display = true;
         $data = getHttpVal();
@@ -25,5 +28,28 @@ class Controller_Purview extends Controller_Base{
             $node_m->insertDb($data);
         }
         $this->redirect('nodes');
+    }
+
+    public function group(){
+        $this->_page_title = '权限分组';
+    }
+
+    public function updateGroup(){
+        $this->_display = true;
+        $data = getHttpVal();
+        $id = $data['id'];
+        $group_m = new Model_PurviewGroup();
+        $group_info = $group_m->selectDbById($id);
+        if ($group_info){
+            unset($data['id']);
+            $group_m->updateDbById($id,$data);
+        }else{
+            $group_m->insertDb($data);
+        }
+        $this->redirect('group');
+    }
+
+    public function account(){
+        $this->_page_title = 'GM管理';
     }
 }

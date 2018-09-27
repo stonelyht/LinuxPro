@@ -1,0 +1,262 @@
+<style>
+    .button {
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+        padding: .5em 2em .55em;
+        text-shadow: 0 1px 1px rgba(0,0,0,.3);
+        -webkit-border-radius: .5em;
+        -moz-border-radius: .5em;
+        border-radius: .5em;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        margin-left: 20px;
+    }
+    .button:hover {
+        text-decoration: none;
+    }
+    .button:active {
+        position: relative;
+        top: 1px;
+    }
+    .blue {
+        color: #d9eef7;
+        border: solid 1px #0076a3;
+        background: #0095cd;
+        background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+        background: -moz-linear-gradient(top,  #00adee,  #0078a5);
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');
+    }
+    .blue:hover {
+        background: #007ead;
+        background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));
+        background: -moz-linear-gradient(top,  #0095cc,  #00678e);
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e');
+    }
+    .blue:active {
+        color: #80bed6;
+        background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#00adee));
+        background: -moz-linear-gradient(top,  #0078a5,  #00adee);
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');
+    }
+</style>
+<div class="view-product">
+    <div class="authority">
+        <div class="authority-head">
+            <div class="manage-head">
+                <h6 class="layout padding-left manage-head-con">
+                    <{$page_title}>
+                </h6>
+            </div>
+        </div>
+        <div>
+            <a href="javascript:void 0;" onclick="addGroup()" class="button blue">添加</a>
+        </div>
+        <div class="authority-content">
+            <div class="list-content show">
+                <div class="offcial-table tr-border margin-big-top clearfix">
+                    <div class="tr-th clearfix">
+                        <div class="th w20">
+                            id
+                        </div>
+                        <div class="th w20">
+                            名称
+                        </div>
+                        <div class="th w15">
+                            备注
+                        </div>
+                        <div class="th w15">
+                            状态
+                        </div>
+                        <div class="th w15">
+                            功能权限
+                        </div>
+                        <div class="th w15">
+                            操作
+                        </div>
+                    </div>
+                    <div class="tr clearfix border-bottom-none" id="group">
+
+                    </div>
+                </div>
+            </div>
+            <div class="show-page padding-big-right">
+                <div class="page">
+                    <div class="page">
+                        <ul class="offcial-page margin-top margin-big-right">
+                            <li>共<em class="margin-small-left margin-small-right">1</em>条数据</li>
+                            <li>每页显示<em class="margin-small-left margin-small-right">15</em>条</li>
+                            <li><a class="next disable">上一页</a></li>
+                            <li></li>
+                            <li><a class="next disable">下一页</a></li>
+                            <li><span class="fl">共<em class="margin-small-left margin-small-right">1</em>页</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    //页面加载时加载分组信息
+    $(function() {
+        $.ajax({
+            url:"<{$PATHPREFIX}>/AjaxTable/group",
+            type:"post",
+            dataType:"json",
+            beforeSend: function() {
+                data_html = '<div class="td w15">\n' +
+                    '加载中. . .\n' +
+                    '</div>';
+                document.getElementById('group').innerHTML = data_html;
+            },
+            success:function(json){
+                document.getElementById('group').innerHTML = '';
+                if (json.code != '401'){
+                    var data_content = json.data_content;
+                    var data_html = "";
+                    $.each(data_content,function(index,array) {
+                        data_html +="<div>"+ " <div class=\"td w20\">\n" +
+                            ""+array.id+"\n" +
+                            "</div>\n" +
+                            "<div class=\"td w20\">\n" +
+                            ""+array.name+"\n" +
+                            "</div>\n" +
+                            "<div class=\"td w15\">\n" +
+                            ""+array.remark+"\n" +
+                            "</div>\n" +
+                            "<div class=\"td w15\">\n" +
+                            ""+array.status+"\n" +
+                            "</div>\n" +
+                            "<div class=\"td w15\">\n" +
+                            "<a href=\"#\" class=\"button-word2\">无</a>\n" +
+                            "</div>\n" +
+                            "<div class=\"td w15\">\n" +
+                            "<a href=\"javascript:void 0;\" style='color: red' class=\"button-word2\" onclick='delGroup(this,"+array.id+")'>删除</a>\n |" +" <a href=\"javascript:void 0;\" class=\"button-word2\" onclick='editGroup("+array.id+")'>编辑</a>\n"+
+                        "</div>" + "</div>";
+                    });
+                    document.getElementById('group').innerHTML = data_html;
+                }else {
+                    data_html = '<div class="td w15">\n' +
+                        '暂时没有数据\n' +
+                        '</div>';
+                    document.getElementById('group').innerHTML = data_html;
+                }
+            }
+        });
+    });
+
+    function delGroup(e,id) {
+        layer.confirm('您确定要删除分组吗？', {
+            btn: ['确定','取消'], //按钮
+            title:'删除分组'
+        }, function(){
+            $.ajax({
+                url:"<{$PATHPREFIX}>/AjaxTable/delGroup",
+                type:"post",
+                dataType:"json",
+                data:{id:id},
+                success:function(data){
+                    if (data['code'] == '201'){
+                        layer.msg('删除成功',{icon: 1});
+                        e.parentNode.parentNode.remove();
+                    }else {
+                        layer.msg('删除失败',{icon: 2});
+                    }
+                }
+            });
+        });
+    }
+
+    function editGroup(id) {
+        $.ajax({
+            url:"<{$PATHPREFIX}>/AjaxTable/editGroup",
+            type:"post",
+            dataType:"json",
+            data:{id:id},
+            success:function(data){
+                if (data.status == 1){
+                    var status = "<select name=\"status\">\n" +
+                        "<option value=\"1\" aria-checked='true'>是</option>\n" +
+                        "<option value=\"0\">否</option>\n" +
+                        "</select>"
+                }else {
+                    var status = "<select name=\"status\">\n" +
+                        "<option value=\"0\" aria-checked='true'>否</option>\n" +
+                        "<option value=\"1\">是</option>\n" +
+                        "</select>"
+                }
+                layer.open({
+                    type: 1,
+                    title: '修改分组',
+                    closeBtn: 0,
+                    area: ['500px', '360px'],
+                    shadeClose: true,
+                    content: "<form action='<{$PATHPREFIX}>/Purview/updateGroup' method='post' id='edit' class='STYLE-NAME basic-grey'>" +
+                    "                <label>" +
+                    "                    <span>ID:</span>" +
+                    "                    <input id=\"name\" type=\"text\" name=\"id\" value="+data.id+"  readonly=\"readonly \">" +
+                    "                </label>" +
+                    "\n" +
+                    "                <label>" +
+                    "                    <span>名称:</span>" +
+                    "                    <input id=\"email\" type=\"text\" name=\"name\" value="+data.name+">" +
+                    "                </label>" +
+                    "                <label>" +
+                    "                    <span>备注:</span>" +
+                    "                    <input id=\"email\" type=\"text\" name=\"remark\" value="+data.remark+">" +
+                    "                </label>" +
+                    "                <label>" +
+                    "                    <span>状态:</span>" +
+                    status
+                    +
+                    "                </label><br>" +
+                    "                <label>" +
+                    "                    <span>&nbsp;</span>" +
+                    "                    <input type=\"submit\" class=\"button\" value=\"修改\" >" +
+                    "                </label>" +
+                    "            </form>"
+                });
+            }
+        });
+    }
+
+    function addGroup() {
+        layer.open({
+            type: 1,
+            title: '添加分组',
+            closeBtn: 0,
+            area: ['500px', '300px'],
+            shadeClose: true,
+            content: "<form action='<{$PATHPREFIX}>/Purview/updateGroup' method='post' id='edit' class='STYLE-NAME basic-grey'>" +
+            "                <label>" +
+            "                    <span>名称:</span>" +
+            "                    <input id=\"name\" type=\"text\" name=\"name\" value=''>" +
+            "                </label>" +
+            "\n" +
+            "                <label>" +
+            "                    <span>备注:</span>" +
+            "                    <input id=\"email\" type=\"text\" name=\"remark\" value=''>" +
+            "                </label>" +
+            "                <label>" +
+            "                    <span>显示:</span>" +
+            "<select name=\"status\">\n" +
+            "<option value=\"1\" aria-checked='true'>是</option>\n" +
+            "<option value=\"0\">否</option>\n" +
+            "</select>"
+            +
+            "                </label>" +
+            "                <label>" +
+            "                    <span>&nbsp;</span>" +
+            "                    <input type=\"submit\" class=\"button\" value=\"添加\" >" +
+            "                </label>" +
+            "            </form>"
+        });
+    }
+</script>

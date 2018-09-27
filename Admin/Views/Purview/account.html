@@ -180,44 +180,35 @@
         <div class="authority-content">
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Controller
-                        </th>
-                        <th>
-                            Action
-                        </th>
-                        <th>
-                            Ajax-Action
-                        </th>
-                        <th>
-                            名称
-                        </th>
-                        <th>
-                            备注
-                        </th>
-                        <th>
-                            排序
-                        </th>
-                        <th>
-                            父ID
-                        </th>
-                        <th>
-                            状态
-                        </th>
-                        <th>
-                            显示
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
-                    <tbody id="nodeInfo" >
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        用户名
+                    </th>
+                    <th>
+                        权限组
+                    </th>
+                    <th>
+                        创建时间
+                    </th>
+                    <th>
+                        最后登录时间
+                    </th>
+                    <th>
+                        最后登录IP
+                    </th>
+                    <th>
+                        是否生效
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+                <tbody id="nodeInfo" >
 
-                    </tbody>
+                </tbody>
                 </thead>
             </table>
             <div class="show-page padding-big-right">
@@ -230,38 +221,21 @@
     </div>
 </div>
 <script>
-    var curPage;        //当前页数
-    var totalItem;      //总记录数
-    var pageSize;       //每一页记录数
-    var totalPage;      //总页数
-
     //页面加载时初始化分页
     $(function() {
-        nodeInfo(1);
-    });
-
-    /**
-     * @param pageNum
-     */
-    function nodeInfo(pageNum) {
         $.ajax({
-            url:"<{$PATHPREFIX}>/AjaxTable/nodes",
+            url:"<{$PATHPREFIX}>/AjaxTable/",
             type:"post",
             dataType:"json",
-            data:{pageNum:pageNum},
             beforeSend: function() {
-                data_html = '<div class="td w15">\n' +
+                data_html = '<tr class="td w15">\n' +
                     '加载中. . .\n' +
-                    '</div>';
+                    '</tr>';
                 document.getElementById('nodeInfo').innerHTML = data_html;
             },
             success:function(json){
                 document.getElementById('nodeInfo').innerHTML = '';
                 if (json.code != '401'){
-                    totalItem = json.totalItem;
-                    pageSize = json.pageSize;
-                    curPage = pageNum;
-                    totalPage = json.totalPage;
                     var data_content = json.data_content;
                     var data_html = "";
                     $.each(data_content,function(index,array) {
@@ -270,7 +244,7 @@
                             ''+array.id+'\n' +
                             '</td>\n' +
                             '<td>\n' +
-                            ''+array.controller+'\n' +
+                            ''+array.username+'\n' +
                             '</td>\n' +
                             '<td>\n' +
                             ''+array.action+'\n' +
@@ -287,23 +261,11 @@
                             '<td>\n' +
                             ''+array.sort+'\n' +
                             '</td>\n' +
-                            '<td>\n' +
-                            ''+array.pid+'\n' +
-                            '</td>\n' +
-                            '<td>\n' +
-                            ''+array.status+'\n' +
-                            '</td>\n' +
-                            '<td>\n' +
-                            ''+array.show+'\n' +
-                            '</td>\n' +
-                            '<td>\n' +
                             '<a style="color: red" onclick="delNode(this,'+array.id+')">删除</a> | <a onclick="editNode('+array.id+')">编辑</a>\n' +
                             '</td>' +
                             '</tr>';
                     });
                     document.getElementById('nodeInfo').innerHTML = data_html;
-                    //加载分页
-                    getPageBar();
                 }else {
                     data_html = '<div class="td w15">\n' +
                         '暂时没有数据\n' +
@@ -312,60 +274,7 @@
                 }
             }
         });
-    }
-
-    //获取分页条（分页按钮栏的规则和样式根据自己的需要来设置）
-    function getPageBar()
-    {
-        if(curPage > totalPage) {
-            curPage = totalPage;
-        }
-        if(curPage < 1) {
-            curPage = 1;
-        }
-
-        pageBar = "";
-
-        //如果不是第一页
-        if(curPage != 1){
-            pageBar += "<span class='pageBtn'><a href='javascript:turnPage(1)'>首页</a></span>";
-            pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+(curPage-1)+")'><<</a></span>";
-        }
-
-        //显示的页码按钮(5个)
-        var start,end;
-        if(totalPage <= 5) {
-            start = 1;
-            end = totalPage;
-        } else {
-            if(curPage-2 <= 0) {
-                start = 1;
-                end = 5;
-            } else {
-                if(totalPage-curPage < 2) {
-                    start = totalPage - 4;
-                    end = totalPage;
-                } else {
-                    start = curPage - 2;
-                    end = curPage + 2;
-                }
-            }
-        }
-        for(var i=start;i<=end;i++) {
-            if(i == curPage) {
-                pageBar += "<span class='pageBtn-selected'><a href='javascript:turnPage("+i+")'>"+i+"</a></span>";
-            } else {
-                pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+i+")'>"+i+"</a></span>";
-            }
-        }
-        //如果不是最后页
-        if(curPage != totalPage){
-            pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+(parseInt(curPage)+1)+")'>>></a></span>";
-            pageBar += "<span class='pageBtn'><a href='javascript:turnPage("+totalPage+")'>尾页</a></span>";
-        }
-        var Record = "   <span>每页"+pageSize+"条   共"+totalItem+"条</span>";
-        $("#pageBar").html(pageBar+Record);
-    }
+    });
 
     function delNode(e,id) {
         layer.confirm('您确定要删除节点吗？', {
@@ -466,7 +375,7 @@
                     "                <label>" +
                     "                    <span>显示:</span>" +
                     show
-                     +
+                    +
                     "                </label>" +
                     "                <label>" +
                     "                    <span>&nbsp;</span>" +
@@ -543,4 +452,3 @@
         });
     }
 </script>
-

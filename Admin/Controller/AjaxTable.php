@@ -63,4 +63,40 @@ class Controller_AjaxTable extends Controller_Base{
         echo json_encode($node_info);
     }
 
+    public function group(){
+        $group_m = new Model_PurviewGroup();
+        $group_info = $group_m->selectAll();
+        if ($group_info){
+            $data = [
+                'code' => '201',
+                'data_content' => $group_info
+            ];
+        }else{
+            $data = [
+                'code' => '401',
+            ];
+        }
+        echo json_encode($data);
+    }
+
+    /*
+     * 删除分组
+     * */
+    public function delGroup(){
+        $id = getHttpVal('id');
+        $group_m = new Model_PurviewGroup();
+        $group_m->deleteDbById($id);
+        $arr['code'] = '201';
+        echo json_encode($arr);
+    }
+
+    /**
+     * 修改分组
+     */
+    public function editGroup(){
+        $id = getHttpVal('id');
+        $group_m = new Model_PurviewGroup();
+        $group_info = $group_m->selectDbById($id);
+        echo json_encode($group_info);
+    }
 }
