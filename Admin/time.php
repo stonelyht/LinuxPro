@@ -66,7 +66,7 @@ date_default_timezone_set($timeZone);
 Sys_Core_Application::initError();
 
 /* 程序入口 */
-//Sys_Core_Application::run();
+Sys_Core_Application::run();
 $time = new Model_Timer(1, false, function()
 {
     echo date("Y-m-d H:i:s\n");
