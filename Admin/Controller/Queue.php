@@ -21,8 +21,8 @@ class Controller_Queue{
 
     public function pushList(){
         $key  = 'Task:';
-        $rand = rand(1001,9999);
+//        $rand = rand(1001,9999);
         $drand = rand(10000,99999).time().md5(time()).':Task';
-        $this->_redis->rPush($key.$rand,$drand);
+        $this->_redis->rPush($key."List",$drand);
     }
 }
