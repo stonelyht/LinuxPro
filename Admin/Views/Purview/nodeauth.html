@@ -164,6 +164,89 @@
         background: -moz-linear-gradient(top,  #0078a5,  #00adee);
         filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');
     }
+
+    .testswitch {
+        position: relative;
+        float: left;
+        width: 90px;
+        margin: 0;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select: none;
+    }
+
+    .testswitch-checkbox {
+        display: none;
+    }
+
+    .testswitch-label {
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid #999999;
+        border-radius: 20px;
+    }
+
+    .testswitch-inner {
+        display: block;
+        width: 200%;
+        margin-left: -100%;
+        transition: margin 0.3s ease-in 0s;
+    }
+
+    .testswitch-inner::before, .testswitch-inner::after {
+        display: block;
+        float: right;
+        width: 50%;
+        height: 30px;
+        padding: 0;
+        line-height: 30px;
+        font-size: 14px;
+        color: white;
+        font-family:
+                Trebuchet, Arial, sans-serif;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .testswitch-inner::after {
+        content: attr(data-on);
+        padding-left: 10px;
+        background-color: #00e500;
+        color: #FFFFFF;
+    }
+
+    .testswitch-inner::before {
+        content: attr(data-off);
+        padding-right: 10px;
+        background-color: #EEEEEE;
+        color: #999999;
+        text-align: right;
+    }
+
+    .testswitch-switch {
+        position: absolute;
+        display: block;
+        width: 22px;
+        height: 22px;
+        margin: 4px;
+        background: #FFFFFF;
+        top: 0;
+        bottom: 0;
+        right: 56px;
+        border: 2px solid #999999;
+        border-radius: 20px;
+        transition: all 0.3s ease-in 0s;
+    }
+
+    .testswitch-checkbox:checked + .testswitch-label .testswitch-inner {
+        margin-left: 0;
+    }
+
+    .testswitch-checkbox:checked + .testswitch-label .testswitch-switch {
+        right: 0px;
+    }
+
 </style>
 <div class="view-product">
     <div class="authority">
@@ -202,7 +285,15 @@
                     <td><{$node.name}></td>
                     <td><{$node.controller}></td>
                     <td><{$node.action}></td>
-                    <td id="showNode<{$node.id}>">0</td>
+                    <td id="showNode<{$node.id}>">
+                        <div class="testswitch">
+                            <input class="testswitch-checkbox" id="onoffswitch<{$node.id}>" type="checkbox">
+                            <label class="testswitch-label" for="onoffswitch<{$node.id}>">
+                                <span class="testswitch-inner" data-on="ON" data-off="OFF"></span>
+                                <span class="testswitch-switch"></span>
+                            </label>
+                        </div>
+                    </td>
                 </tr>
                 <{/foreach}>
                 </tbody>
@@ -219,9 +310,23 @@
     </div>
 </div>
 <script>
-
-    var purviewNode = JSON.parse('<{$purviewNode}>');
-    $.each(purviewNode,function(index,array) {
-        document.getElementById('showNode'+array.id+'').innerHTML = 1;
+    $(document).ready(function() {
+        var purviewNode = JSON.parse('<{$purviewNode}>');
+        $.each(purviewNode,function(index,array) {
+            $('#onoffswitch'+array.id+'').is(':checked')
+            // document.getElementById('onoffswitch'+array.id+'').innerHTML = 1;
+        });
+        // $("#onoffswitch").on('click', function(){
+        //     clickSwitch()
+        // });
+        //
+        // var clickSwitch = function() {
+        //     if ($("#onoffswitch").is(':checked')) {
+        //         console.log("在ON的状态下");
+        //     } else {
+        //         console.log("在OFF的状态下");
+        //     }
+        // };
     });
+
 </script>
