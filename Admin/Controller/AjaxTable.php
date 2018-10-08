@@ -99,4 +99,13 @@ class Controller_AjaxTable extends Controller_Base{
         $group_info = $group_m->selectDbById($id);
         echo json_encode($group_info);
     }
+
+    /**
+     * 管理员列表
+     */
+    public function accountList(){
+        $account_m = new Model_Account();
+        $account_info = $account_m->getAccount();
+        echo json_encode($account_info);
+    }
 }

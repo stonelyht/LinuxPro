@@ -40,4 +40,14 @@ class Model_Account extends Model_Base{
             ->fetchOne();
         return $res;
     }
+
+
+    public function getAccount(){
+        $res = $this->getDb()
+            ->from($this->_table)
+            ->select("$this->_table.*,purview_group.name")
+            ->join(array("purview_group","$this->_table.group_id = purview_group.id"))
+            ->fetchAll();
+        return $res;
+    }
 }

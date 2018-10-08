@@ -224,7 +224,7 @@
     //页面加载时初始化分页
     $(function() {
         $.ajax({
-            url:"<{$PATHPREFIX}>/AjaxTable/",
+            url:"<{$PATHPREFIX}>/AjaxTable/accountList",
             type:"post",
             dataType:"json",
             beforeSend: function() {
@@ -247,19 +247,16 @@
                             ''+array.username+'\n' +
                             '</td>\n' +
                             '<td>\n' +
-                            ''+array.action+'\n' +
-                            '</td>\n' +
-                            '<td>\n' +
-                            ''+array.action_operate+'\n' +
-                            '</td>\n' +
-                            '<td>\n' +
                             ''+array.name+'\n' +
                             '</td>\n' +
                             '<td>\n' +
-                            ''+array.remark+'\n' +
+                            ''+array.create_time+'\n' +
                             '</td>\n' +
                             '<td>\n' +
-                            ''+array.sort+'\n' +
+                            ''+array.login_time+'\n' +
+                            '</td>\n' +
+                            '<td>\n' +
+                            ''+array.status+'\n' +
                             '</td>\n' +
                             '<a style="color: red" onclick="delNode(this,'+array.id+')">删除</a> | <a onclick="editNode('+array.id+')">编辑</a>\n' +
                             '</td>' +
