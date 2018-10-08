@@ -38,4 +38,24 @@ class Model_PurviewNode extends Model_Base{
             ->fetchAll();
         return $res ? $res : array();
     }
+
+    public function getNodeAuth($group_id){
+        $res = $this->getDb()
+            ->from($this->_table)
+            ->select("$this->_table.*")
+            ->join(array("purview_group_node","$this->_table.id","purview_group_node.node_id"))
+            ->where('and',"purview_group_node.group_id = $group_id")
+            ->where('and',"$this->_table.show = 1")
+            ->fetchAll();
+        return $res;
+    }
+    
+    public function getOrderNode(){
+        $res = $this->getDb()
+            ->from($this->_table)
+            ->where('and',"`show` = 1")
+            ->order(array("pid" => "asc"))
+            ->fetchAll();
+        return $res;
+    }
 }

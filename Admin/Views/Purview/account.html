@@ -206,10 +206,11 @@
                         操作
                     </th>
                 </tr>
+                </thead>
                 <tbody id="nodeInfo" >
 
                 </tbody>
-                </thead>
+
             </table>
             <div class="show-page padding-big-right">
                 <div class="page">
@@ -221,6 +222,7 @@
     </div>
 </div>
 <script>
+    var groupInfo;
     //页面加载时初始化分页
     $(function() {
         $.ajax({
@@ -234,6 +236,7 @@
                 document.getElementById('nodeInfo').innerHTML = data_html;
             },
             success:function(json){
+                groupInfo = json.group_info;
                 document.getElementById('nodeInfo').innerHTML = '';
                 if (json.code != '401'){
                     var data_content = json.data_content;
@@ -250,15 +253,19 @@
                             ''+array.name+'\n' +
                             '</td>\n' +
                             '<td>\n' +
-                            ''+array.create_time+'\n' +
+                            ''+changeDate(array.create_time)+'\n' +
                             '</td>\n' +
                             '<td>\n' +
-                            ''+array.login_time+'\n' +
+                            ''+changeDate(array.login_time)+'\n' +
+                            '</td>\n' +
+                            '<td>\n' +
+                            ''+array.login_ip+'\n' +
                             '</td>\n' +
                             '<td>\n' +
                             ''+array.status+'\n' +
-                            '</td>\n' +
-                            '<a style="color: red" onclick="delNode(this,'+array.id+')">删除</a> | <a onclick="editNode('+array.id+')">编辑</a>\n' +
+                            '</td>' +
+                            '<td>\n' +
+                            '<a style="color: red" onclick="delNode(this,'+array.id+')">删除</a> | <a onclick="editNode('+array.id+')">编辑</a>' +
                             '</td>' +
                             '</tr>';
                     });
@@ -279,7 +286,7 @@
             title:'删除节点'
         }, function(){
             $.ajax({
-                url:"<{$PATHPREFIX}>/AjaxTable/delNode",
+                url:"<{$PATHPREFIX}>/AjaxTable/delAccount",
                 type:"post",
                 dataType:"json",
                 data:{id:id},
@@ -297,81 +304,51 @@
 
     function editNode(id) {
         $.ajax({
-            url:"<{$PATHPREFIX}>/AjaxTable/editNode",
+            url:"<{$PATHPREFIX}>/AjaxTable/editAccount",
             type:"post",
             dataType:"json",
             data:{id:id},
             success:function(data){
-                if (data.show == 1){
-                    var show = "<select name=\"show\">\n" +
+                if (data.status == 1){
+                    var status = "<select name=\"status\">\n" +
                         "<option value=\"1\" aria-checked='true'>是</option>\n" +
                         "<option value=\"0\">否</option>\n" +
                         "</select>"
                 }else {
-                    var show = "<select name=\"show\">\n" +
+                    var status = "<select name=\"status\">\n" +
                         "<option value=\"0\" aria-checked='true'>否</option>\n" +
                         "<option value=\"1\">是</option>\n" +
                         "</select>"
                 }
-                if (data.status == 1){
-                    var status = "<select name=\"status\">\n" +
-                        "<option value=\"1\" aria-checked='true'>正常</option>\n" +
-                        "<option value=\"0\">关闭</option>\n" +
-                        "</select>"
-                }else {
-                    var status = "<select name=\"status\">\n" +
-                        "<option value=\"0\" aria-checked='true'>关闭</option>\n" +
-                        "<option value=\"1\">正常</option>\n" +
-                        "</select>"
-                }
+                var group = '';
+                $.each(groupInfo,function(index,array) {
+                    if (array.id == data.group_id){
+                        group += "<option selected value="+array.id+">"+array.name+"</option>\n"
+                    }else {
+                        group += "<option value="+array.id+">"+array.name+"</option>\n"
+                    }
+                });
+                var groupList = "<select name=\"group_id\">\n" + group + "</select>";
                 layer.open({
                     type: 1,
-                    title: '修改节点',
+                    title: '修改信息',
                     closeBtn: 0,
-                    area: ['500px', '360px'],
+                    area: ['500px', '300px'],
                     shadeClose: true,
-                    content: "<form action='<{$PATHPREFIX}>/Purview/updateNode' method='post' id='edit' class='STYLE-NAME basic-grey'>" +
+                    content: "<form action='<{$PATHPREFIX}>/Purview/updateAccount' method='post' id='edit' class='STYLE-NAME basic-grey'>" +
                     "                <label>" +
-                    "                    <span>ID:</span>" +
-                    "                    <input id=\"name\" type=\"text\" name=\"id\" value="+data.id+">" +
+                    "                    <span>用户名:</span>" +
+                    "                    <input type=\"hidden\" name=\"id\" value="+data.id+">" +
+                    "                    <input id=\"name\" type=\"text\" name=\"username\" value="+data.username+">" +
                     "                </label>" +
                     "\n" +
                     "                <label>" +
-                    "                    <span>Controller:</span>" +
-                    "                    <input id=\"email\" type=\"text\" name=\"controller\" value="+data.controller+">" +
-                    "                </label>" +
-                    "                <label>" +
-                    "                    <span>Action:</span>" +
-                    "                    <input id=\"email\" type=\"text\" name=\"action\" value="+data.action+">" +
-                    "                </label>" +
-                    "                <label>" +
-                    "                    <span>Ajax-Action:</span>" +
-                    "                    <input id=\"email\" type=\"text\" name=\"action_operate\" value="+data.action_operate+">" +
-                    "                </label>" +
-                    "                <label>" +
-                    "                    <span>名称:</span>" +
-                    "                    <input id=\"email\" type=\"text\" name=\"name\" value="+data.name+">" +
-                    "                </label>" +
-                    "                <label>" +
-                    "                    <span>备注:</span>" +
-                    "                    <input id=\"email\" type=\"text\" name=\"remark\" value="+data.remark+">" +
-                    "                </label>" +
-                    "                <label>" +
-                    "                    <span>排序:</span>\n" +
-                    "                    <input id=\"email\" type=\"text\" name=\"sort\" value="+data.sort+">" +
-                    "                </label>" +
-                    "                <label>" +
-                    "                    <span>父ID:</span>" +
-                    "                    <input id=\"email\" type=\"text\" name=\"pid\" value="+data.pid+">" +
-                    "                </label>" +
-                    "                <label>" +
-                    "                    <span>状态:</span>" +
-                    status
-                    +
+                    "                    <span>分组:</span>" +
+                    groupList+
                     "                </label><br>" +
                     "                <label>" +
-                    "                    <span>显示:</span>" +
-                    show
+                    "                    <span>是否生效:</span>" +
+                    status
                     +
                     "                </label>" +
                     "                <label>" +
@@ -385,58 +362,35 @@
     }
 
     function addNode() {
+        var group = '';
+        $.each(groupInfo,function(index,array) {
+            group += "<option value="+array.id+">"+array.name+"</option>\n"
+        });
+        var groupList = "<select name=\"group_id\">\n" + group + "</select>";
         layer.open({
             type: 1,
             title: '添加节点',
             closeBtn: 0,
             area: ['500px', '360px'],
             shadeClose: true,
-            content: "<form action='<{$PATHPREFIX}>/Purview/updateNode' method='post' id='edit' class='STYLE-NAME basic-grey'>" +
+            content: "<form action='<{$PATHPREFIX}>/Purview/updateAccount' method='post' id='edit' class='STYLE-NAME basic-grey'>" +
             "                <label>" +
-            "                    <span>ID:</span>" +
-            "                    <input id=\"name\" type=\"text\" name=\"id\" value=''>" +
+            "                    <span>用户名:</span>" +
+            "                    <input id=\"name\" type=\"text\" name=\"username\">" +
+            "                </label>" +
+            "                <label>" +
+            "                    <span>密码:</span>" +
+            "                    <input id=\"name\" type=\"text\" name=\"password\">" +
             "                </label>" +
             "\n" +
             "                <label>" +
-            "                    <span>Controller:</span>" +
-            "                    <input id=\"email\" type=\"text\" name=\"controller\" value=''>" +
-            "                </label>" +
-            "                <label>" +
-            "                    <span>Action:</span>" +
-            "                    <input id=\"email\" type=\"text\" name=\"action\" value=''>" +
-            "                </label>" +
-            "                <label>" +
-            "                    <span>Ajax-Action:</span>" +
-            "                    <input id=\"email\" type=\"text\" name=\"action_operate\" value=''>" +
-            "                </label>" +
-            "                <label>" +
-            "                    <span>名称:</span>" +
-            "                    <input id=\"email\" type=\"text\" name=\"name\" value=''>" +
-            "                </label>" +
-            "                <label>" +
-            "                    <span>备注:</span>" +
-            "                    <input id=\"email\" type=\"text\" name=\"remark\" value=''>" +
-            "                </label>" +
-            "                <label>" +
-            "                    <span>排序:</span>\n" +
-            "                    <input id=\"email\" type=\"text\" name=\"sort\" value=''>" +
-            "                </label>" +
-            "                <label>" +
-            "                    <span>父ID:</span>" +
-            "                    <input id=\"email\" type=\"text\" name=\"pid\" value=''>" +
-            "                </label>" +
-            "                <label>" +
-            "                    <span>状态:</span>" +
-            "<select name=\"status\">\n" +
-            "<option value=\"1\" aria-checked='true'>正常</option>\n" +
-            "<option value=\"0\">关闭</option>\n" +
-            "</select>"
-            +
+            "                    <span>分组:</span>" +
+            groupList+
             "                </label><br>" +
             "                <label>" +
-            "                    <span>显示:</span>" +
-            "<select name=\"show\">\n" +
-            "<option value=\"1\" aria-checked='true'>是</option>\n" +
+            "                    <span>是否生效:</span>" +
+            "<select name=\"status\">\n" +
+            "<option value=\"1\">是</option>\n" +
             "<option value=\"0\">否</option>\n" +
             "</select>"
             +
@@ -447,5 +401,18 @@
             "                </label>" +
             "            </form>"
         });
+    }
+
+    function changeDate(datetimes){
+        var date = new Date(datetimes * 1000);
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() + ' ';
+        // h = date.getHours() + ':';
+        // m = date.getMinutes() + ':';
+        // s = date.getSeconds();
+//      年 月 日 时 分 秒
+//         console.log(Y);
+        return Y+M+D;
     }
 </script>

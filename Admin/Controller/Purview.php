@@ -52,4 +52,38 @@ class Controller_Purview extends Controller_Base{
     public function account(){
         $this->_page_title = 'GM管理';
     }
+    
+    public function updateAccount(){
+        $this->_display = true;
+        $data = getHttpVal();
+        $id = $data['id'];
+        $account_m = new Model_Account();
+        unset($data['id']);
+        if ($id){
+            $account_m->updateDbById($id,$data);
+        }else{
+            $data['password'] = md5($data['password']);
+            $data['create_time'] = time();
+            $account_m->insertDb($data);
+        }
+        $this->redirect('account');
+    }
+
+    public function nodeAuth(){
+//        $this->_display = true;
+        $group_id = getHttpVal('group_id');
+        $group_m = new Model_PurviewGroup();
+        $group_info = $group_m->selectDbById($group_id);
+        $this->_page_title = $group_info['name'].'-节点权限';
+        $purviewNode_m = new Model_PurviewNode();
+        $purviewNode_info = $purviewNode_m->getNodeAuth($group_id);
+        $orderNode = $purviewNode_m->getOrderNode();
+        if (is_array($orderNode)){
+            foreach ($orderNode as $node) {
+                $data[$node['pid']][] = $node;
+            }
+        }
+        $this->assign('orderNode',$data);
+        $this->assign('purviewNode',json_encode($purviewNode_info));
+    }
 }

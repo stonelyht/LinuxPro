@@ -106,6 +106,45 @@ class Controller_AjaxTable extends Controller_Base{
     public function accountList(){
         $account_m = new Model_Account();
         $account_info = $account_m->getAccount();
+        $group_m = new Model_PurviewGroup();
+        $group_info = $group_m->selectAll();
+        if ($account_info){
+            $data = [
+                'code' => '201',
+                'data_content' => $account_info
+            ];
+        }else{
+            $data = [
+                'code' => '401',
+            ];
+        }
+        $data['group_info'] = $group_info;
+        echo json_encode($data);
+    }
+
+    /**
+     * 删除管理员
+     */
+    public function delAccount(){
+        $id = getHttpVal('id');
+        if ($id == 1){
+            $data = [
+                'code' => 401
+            ];
+        }else{
+            $account_m = new Model_Account();
+            $account_m->deleteDbById($id);
+            $data = [
+                'code' => 201
+            ];
+        }
+        echo json_encode($data);
+    }
+
+    public function editAccount(){
+        $id = getHttpVal('id');
+        $account_m = new Model_Account();
+        $account_info = $account_m->selectDbById($id);
         echo json_encode($account_info);
     }
 }
