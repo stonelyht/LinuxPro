@@ -147,4 +147,13 @@ class Controller_AjaxTable extends Controller_Base{
         $account_info = $account_m->selectDbById($id);
         echo json_encode($account_info);
     }
+
+    public function changeNodeAuth(){
+        $id = getHttpVal('id');
+        $group_id = getHttpVal('group_id');
+        $show = getHttpVal('show');
+        $groupNode_m = new Model_PurviewGroupNode();
+        $groupNode_m->getAuthNodes($id,$group_id,$show);
+
+    }
 }

@@ -257,9 +257,9 @@
                 </h6>
             </div>
         </div>
-        <div>
-            <a href="javascript:void 0;" onclick="addNode()" class="button blue">添加</a>
-        </div>
+        <!--<div>-->
+            <!--<a href="javascript:void 0;" onclick="addNode()" class="button blue">添加</a>-->
+        <!--</div>-->
         <div class="authority-content">
             <{foreach $orderNode as $nodes}>
             <table class="table table-striped" style="width: 800px">
@@ -287,7 +287,7 @@
                     <td><{$node.action}></td>
                     <td id="showNode<{$node.id}>">
                         <div class="testswitch">
-                            <input class="testswitch-checkbox" id="onoffswitch<{$node.id}>" type="checkbox">
+                            <input class="testswitch-checkbox" id="onoffswitch<{$node.id}>" onclick="clickSwitch('<{$node.id}>')" type="checkbox">
                             <label class="testswitch-label" for="onoffswitch<{$node.id}>">
                                 <span class="testswitch-inner" data-on="ON" data-off="OFF"></span>
                                 <span class="testswitch-switch"></span>
@@ -313,20 +313,24 @@
     $(document).ready(function() {
         var purviewNode = JSON.parse('<{$purviewNode}>');
         $.each(purviewNode,function(index,array) {
-            $('#onoffswitch'+array.id+'').is(':checked')
-            // document.getElementById('onoffswitch'+array.id+'').innerHTML = 1;
+            document.getElementById('onoffswitch'+array.id+'').setAttribute('checked','checked');
         });
-        // $("#onoffswitch").on('click', function(){
-        //     clickSwitch()
-        // });
-        //
-        // var clickSwitch = function() {
-        //     if ($("#onoffswitch").is(':checked')) {
-        //         console.log("在ON的状态下");
-        //     } else {
-        //         console.log("在OFF的状态下");
-        //     }
-        // };
     });
-
+    var clickSwitch = function(id) {
+        if ($("#onoffswitch"+id+"").is(':checked')) {
+            console.log("在ON的状态下"+id+"");
+            var show = 1;
+        } else {
+            console.log("在OFF的状态下"+id+"");
+            var show = 0;
+        }
+        $.ajax({
+            url:"<{$PATHPREFIX}>/AjaxTable/changeNodeAuth",
+            type:"post",
+            dataType:"json",
+            data:{id:id,show:show,group_id:'<{$group_id}>'},
+            success:function(data){
+            }
+        });
+    };
 </script>

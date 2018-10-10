@@ -1,59 +1,67 @@
 <div class="view-sidebar">
     <div class="sidebar-content">
+        <!--<div class="sidebar-nav">-->
+            <!--<div class="sidebar-title">-->
+                <!--<a href="#">-->
+                    <!--<span class="icon"><b class="fl icon-arrow-down"></b></span>-->
+                    <!--<span class="text-normal">产品与服务</span>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<ul class="sidebar-trans">-->
+                <!--<li>-->
+                    <!--<a href="webSet.html">-->
+                        <!--<b class="sidebar-icon"><img src="/Public/Images/icon_author.png" width="16" height="16" /></b>-->
+                        <!--<span class="text-normal">站点管理</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a href="smsInfo.html">-->
+                        <!--<b class="sidebar-icon"><img src="/Public/Images/icon_message.png" width="16" height="16" /></b>-->
+                        <!--<span class="text-normal">短信</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--&lt;!&ndash; <li>-->
+                    <!--<a href="#">-->
+                        <!--<b class="sidebar-icon"><img src="/Public//Images/icon_market.png" width="16" height="16" /></b>-->
+                        <!--<span class="text-normal">云市场</span>-->
+                    <!--</a>-->
+                <!--</li> &ndash;&gt;-->
+            <!--</ul>-->
+        <!--</div>-->
         <div class="sidebar-nav">
             <div class="sidebar-title">
-                <a href="#">
-                    <span class="icon"><b class="fl icon-arrow-down"></b></span>
-                    <span class="text-normal">产品与服务</span>
-                </a>
-            </div>
-            <ul class="sidebar-trans">
-                <li>
-                    <a href="webSet.html">
-                        <b class="sidebar-icon"><img src="/Public/Images/icon_author.png" width="16" height="16" /></b>
-                        <span class="text-normal">站点管理</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="smsInfo.html">
-                        <b class="sidebar-icon"><img src="/Public/Images/icon_message.png" width="16" height="16" /></b>
-                        <span class="text-normal">短信</span>
-                    </a>
-                </li>
-                <!-- <li>
-                    <a href="#">
-                        <b class="sidebar-icon"><img src="/Public//Images/icon_market.png" width="16" height="16" /></b>
-                        <span class="text-normal">云市场</span>
-                    </a>
-                </li> -->
-            </ul>
-        </div>
-        <div class="sidebar-nav">
-            <div class="sidebar-title">
+                <{if in_array("Purview/index",$menu)}>
                 <a href="#">
                     <span class="icon"><b class="fl icon-arrow-down"></b></span>
                     <span class="text-normal">权限管理</span>
                 </a>
+                <{/if}>
             </div>
             <ul class="sidebar-trans">
+                <{if in_array("Purview/nodes",$menu)}>
                 <li>
                     <a href="<{$PATHPREFIX}>/Purview/nodes">
                         <b class="sidebar-icon"><img src="/Public/Images/icon_cost.png" width="16" height="16" /></b>
                         <span class="text-normal">节点列表</span>
                     </a>
                 </li>
+                <{/if}>
+                <{if in_array("Purview/group",$menu)}>
                 <li>
                     <a href="<{$PATHPREFIX}>/Purview/group">
                         <b class="sidebar-icon"><img src="/Public/Images/icon_cost.png" width="16" height="16" /></b>
                         <span class="text-normal">权限分组</span>
                     </a>
                 </li>
+                <{/if}>
+                <{if in_array("Purview/account",$menu)}>
                 <li>
                     <a href="<{$PATHPREFIX}>/Purview/account">
                         <b class="sidebar-icon"><img src="/Public/Images/icon_cost.png" width="16" height="16" /></b>
                         <span class="text-normal">GM管理</span>
                     </a>
                 </li>
+                <{/if}>
                 <!--<li>-->
                     <!--<a href="userInfo.html">-->
                         <!--<b class="sidebar-icon"><img src="/Public/Images/icon_cost.png" width="16" height="16" /></b>-->

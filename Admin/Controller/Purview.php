@@ -70,7 +70,6 @@ class Controller_Purview extends Controller_Base{
     }
 
     public function nodeAuth(){
-//        $this->_display = true;
         $group_id = getHttpVal('group_id');
         $group_m = new Model_PurviewGroup();
         $group_info = $group_m->selectDbById($group_id);
@@ -83,6 +82,7 @@ class Controller_Purview extends Controller_Base{
                 $data[$node['pid']][] = $node;
             }
         }
+        $this->assign('group_id',$group_id);
         $this->assign('orderNode',$data);
         $this->assign('purviewNode',json_encode($purviewNode_info));
     }

@@ -11,8 +11,7 @@
  */
 class Controller_Index extends Controller_Base{
 
-    public function Index()
-    {
+    public function Index(){
         $this->_page_title = '管理控制台';
     }
 
