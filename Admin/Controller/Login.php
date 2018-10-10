@@ -44,15 +44,6 @@ class Controller_Login extends Sys_Core_Controller{
                 ];
                 $account_m->updateDbById($user_id,$updata);
                 $this->cacheNodeAuth($user_id,$group_id);
-//                $redis = new Redis();
-//                $redisCfg = conf('Redis','queue');
-//                $redis->connect($redisCfg['host'],$redisCfg['port']);
-//                $redis->auth('747596');
-//                $authNode = $redis->get('nodeAuth:'.$user_id);
-//                $node = explode("-", $authNode);
-//                array_shift($node);
-//                array_pop($node);
-//                var_dump($node);die;
                 $this->redirect('/');
             }else{
                 $this->redirect('/Login/Login');
