@@ -17,13 +17,12 @@
             <!--</ul>-->
         <!--</div>-->
         <div class="sidebar-nav sidebar-nav-fold">
+            <{if in_array("Purview/index",$menu)}>
             <div class="sidebar-title">
-                <{if in_array("Purview/index",$menu)}>
                 <a href="#">
                     <span class="icon"><b class="fl icon-arrow-down"></b></span>
                     <span class="text-normal">权限管理</span>
                 </a>
-                <{/if}>
             </div>
             <ul class="sidebar-trans" style="overflow: hidden; display: none;">
                 <{if in_array("Purview/nodes",$menu)}>
@@ -51,6 +50,7 @@
                 </li>
                 <{/if}>
             </ul>
+            <{/if}>
         </div>
     </div>
 </div>
