@@ -6,7 +6,6 @@ for((i=0;i<60;i=(i+step))); do
 	sleep $step
 done
 
-exit 0
 #防止shell脚本重复运行
 while [ `ps x |grep -v grep|grep queue-push.sh|wc -l` -gt 0 ];
 do
