@@ -69,5 +69,5 @@ Sys_Core_Application::initError();
 $timeScript = new Controller_Queue();
 while (true) {
     $timeScript->pushList();
-    usleep(500000);
+    usleep(1000000);
 }
