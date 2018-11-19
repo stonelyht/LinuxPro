@@ -18,8 +18,8 @@ use \Workerman\Connection\TcpConnection;
 // #### 一个web界面的vmstat工具 ####
 
 // 自动加载类
-require_once __DIR__ . '/vendor/autoload.php';
-print_r(__DIR__);die;
+require_once   dirname(dirname(__DIR__)) . '/Sys/Lib/Workerman/vendor/autoload.php';
+
 $worker = new Worker('Websocket://0.0.0.0:7777');
 $worker->name = 'VMStatWorker';
 // 进程启动时，开启一个vmstat进程，并广播vmstat进程的输出给所有浏览器客户端
