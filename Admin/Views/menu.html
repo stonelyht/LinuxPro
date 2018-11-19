@@ -16,7 +16,7 @@
                 <!--</li>-->
             <!--</ul>-->
         <!--</div>-->
-        <div class="sidebar-nav sidebar-nav-fold">
+        <div class="sidebar-nav">
             <{if in_array("Purview/index",$menu)}>
             <div class="sidebar-title">
                 <a href="#">
@@ -24,7 +24,7 @@
                     <span class="text-normal">权限管理</span>
                 </a>
             </div>
-            <ul class="sidebar-trans" style="overflow: hidden; display: none;">
+            <ul class="sidebar-trans">
                 <{if in_array("Purview/nodes",$menu)}>
                 <li>
                     <a href="<{$PATHPREFIX}>/Purview/nodes">
