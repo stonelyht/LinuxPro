@@ -2,7 +2,7 @@
 step=1 #间隔的秒数，不能大于60
 
 for((i=0;i<60;i=(i+step))); do
-	$(curl 'https://bbs.svw-volkswagen.com/forum.php?mod=viewthread&tid=1058667')
+	$(curl 'https://bbs.svw-volkswagen.com')
 	sleep $step
 done
 
